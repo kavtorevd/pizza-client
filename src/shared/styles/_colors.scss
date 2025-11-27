@@ -1,0 +1,46 @@
+$white: #ffffff;
+$gray: #ededed;
+$black-neutral: #0D1217;
+$orange: #FF6347;
+$red: #ff0000;
+
+$red-gradient: linear-gradient(
+  152deg,
+  #ff2600 -6.95%,
+  #971802 97.72%
+);
+
+$orange-gradient:
+ linear-gradient(
+  121.94deg,
+  #FF6347 0%,
+  #FF826C 100%
+);
+
+
+
+$bg-primary-color: $white;
+$shadow-primary-color: rgba(13, 10, 44, 0.06);
+
+$text-primary-color: $black-neutral;
+$text-secondary-color: $white;
+$attention-text-color: $orange;
+
+$title-primary-color: $orange;
+
+$link-color: $orange;
+
+$error-color: $red;
+
+$btn-primary-bg-color: $orange;
+$btn-second-bg-color: #{$orange}30;
+$btn-primary-hover-opacity: 0.3;
+$btn-primary-text-color: $white;
+
+$input-text-color: $black-neutral;
+$input-border-color: #{$black-neutral}20;
+$input-hover-border-color: #{$black-neutral}40;
+$input-bg-color: #{$black-neutral}10;
+$input-placeholder-color: #{$black-neutral}50;
+
+$icon-color: $orange;

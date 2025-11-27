@@ -1,0 +1,27 @@
+@import '@/shared/styles/main';
+.button, .button_link {
+  width: 100%;
+  max-height: 53px;
+  padding: 16px 0;
+  border-radius: 28px;
+  background-color: $btn-primary-bg-color;
+  color: $btn-primary-text-color;
+  border-width: 0;
+  font-family: $font-Normal;
+  font-size: $text-primary-size;
+  &:hover{
+    opacity: $btn-primary-hover-opacity;
+  }
+}
+
+.button_link {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  &:hover{
+    opacity: $btn-primary-hover-opacity;
+  }
+}
+
