@@ -5,12 +5,15 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 500px;
 }
 
 .menu {
   display: flex;
   flex-direction: column;
   gap:12px;
+  max-width: $content-max-width;
 }
 
 .tittle {
@@ -32,18 +35,16 @@
   margin-bottom: 16px;
 }
 
-.locationItem {
+.locationItem>* {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  padding: 16px 24px;
+  padding: 16px 24px; 
   border-radius: 12px;
-  border: 1px solid  $input-border-color;
-  &:hover {
-    background-color: $input-border-color;
-  }
+  border: 0px solid  $input-border-color;
+  max-height: 150px;
+  animation: all 3s;
 }
 
 .radioInput {
@@ -130,4 +131,8 @@
 .sub_button {
   margin-top: auto; 
   margin-bottom: 5vh;
+}
+
+.loading{
+  margin: auto auto;
 }

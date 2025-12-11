@@ -1,0 +1,160 @@
+@import '@/shared/styles/main';
+
+@keyframes SausageKI {
+  0% {
+    opacity: 0;
+  }
+  30%{
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  71% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+@keyframes chank1Explode {
+  0% { transform: translate(0, 0); opacity: 1; }
+  70% { transform: translate(0, 0); opacity: 1;  filter: blur(0);}
+  80% { transform: translate(0, -50%); opacity: 0; filter: blur(3px); }
+  100% {transform: translate(0, -50%); opacity: 0; filter: blur(3px); }
+}
+
+@keyframes chank2Explode {
+  0% { transform: translate(0, 0); opacity: 1; }
+  70% { transform: translate(0, 0); opacity: 1;  filter: blur(0);}
+  80% { transform: translate(+45%, -15%); opacity: 0; filter: blur(3px); }
+   100% { transform: translate(+45%, -15%); opacity: 0; filter: blur(3px); }
+}
+
+@keyframes chank3Explode {
+  0% { transform: translate(0,0); opacity: 1; }
+  70% { transform: translate(0, 0); opacity: 1;  filter: blur(0);}
+  80% { transform: translate(+45%, +15%); opacity: 0; filter: blur(3px); }
+   100% { transform: translate(+45%, -15%); opacity: 0; filter: blur(3px); }
+}
+
+// Чанк 4 - улетает влево-вниз
+@keyframes chank4Explode {
+  0% { transform: translate(0, 0); opacity: 1; }
+  70% { transform: translate(0, 0); opacity: 1;  filter: blur(0);}
+  80% { transform: translate(-45%, +15%); opacity: 0; filter: blur(3px); }
+   100% { transform: translate(+45%, -15%); opacity: 0; filter: blur(3px); }
+}
+
+// Чанк 5 - улетает вправо-вниз
+@keyframes chank5Explode {
+  0% { transform: translate(0, 0); opacity: 1; }
+  70% { transform: translate(0, 0); opacity: 1;  filter: blur(0);}
+  90% { transform: translate(-45%, -15%); opacity: 0; filter: blur(3px); }
+   100% { transform: translate(+45%, -15%); opacity: 0; filter: blur(3px); }
+}
+
+
+.container {
+  --img_width: 150px;
+  --delay: 0.2s;
+  --capital_delay: calc( var(--delay) * 5);
+  --cycle_delay: 3s;
+  --sausage_width: 25px;
+  --radius: calc(var(--img_width) / 4); // Радиус круга
+  --circle_radius: var(--radius); // Радиус для расположения сосисок
+  aspect-ratio: 1/1;
+  width: var(--img_width);
+  position: relative;
+}
+
+.container>* {
+  position: absolute;
+  &>.sausage{
+    opacity: 0;
+  }
+}
+
+.sausage {
+  background-color: red;
+  border: 5px solid rgb(165, 0, 0);
+  border-radius: 50%;
+  width: var(--sausage_width);
+  height: var(--sausage_width);
+  font-size: 20px;
+  color: transparent;
+  text-align: center;
+  padding: 1px;
+  z-index: 10;
+  position: absolute;
+  animation: SausageKI 4.1s ease forwards;
+   animation-iteration-count: infinite;
+   opacity: 0;
+}
+
+
+.chank1 {
+  .sausage {
+    --angle: 90deg; // Верх
+    top: calc(50% - var(--circle_radius) * sin(var(--angle)));
+    left: calc(50% + var(--circle_radius) * cos(var(--angle)));
+    transform: translate(-50%, -50%);
+  }
+}
+
+.chank2 {
+  .sausage {
+      animation-delay: calc( var(--delay) * 2 );
+    --angle: 18deg; // Право-верх (примерно)
+    top: calc(50% - var(--circle_radius) * sin(var(--angle)));
+    left: calc(50% + var(--circle_radius) * cos(var(--angle)));
+    transform: translate(-50%, -50%);
+  }
+}
+
+.chank3 {
+  .sausage {
+    animation-delay: calc( var(--delay) * 3 );
+    --angle: 306deg; // Право-низ (примерно)
+    top: calc(50% - var(--circle_radius) * sin(var(--angle)));
+    left: calc(50% + var(--circle_radius) * cos(var(--angle)));
+    transform: translate(-50%, -50%);
+  }
+}
+
+.chank4 {
+  .sausage {
+    animation-delay: calc( var(--delay) * 4 );
+    --angle: 234deg; // Лево-низ (примерно)
+    top: calc(50% - var(--circle_radius) * sin(var(--angle)));
+    left: calc(50% + var(--circle_radius) * cos(var(--angle)));
+    transform: translate(-50%, -50%);
+  }
+}
+
+.chank5 {
+  .sausage {
+    animation-delay: calc( var(--delay) * 5 );
+    --angle: 162deg; // Лево-верх (примерно)
+    top: calc(50% - var(--circle_radius) * sin(var(--angle)));
+    left: calc(50% + var(--circle_radius) * cos(var(--angle)));
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.chank1 { animation: chank1Explode 4s ease forwards;
+  animation-delay: 0;
+    animation-iteration-count: infinite; }
+.chank2 { animation: chank2Explode 4s ease forwards;
+  animation-delay: calc( var(--delay) * 1); animation-iteration-count: infinite; }
+.chank3 { animation: chank3Explode 4s ease forwards;
+  animation-delay: calc(  var(--delay) * 2); animation-iteration-count: infinite; }
+.chank4 { animation: chank4Explode 4s ease forwards;
+  animation-delay: calc(  var(--delay) * 3); animation-iteration-count: infinite; }
+.chank5 { animation: chank5Explode 4s ease forwards;
+  animation-delay: calc(  var(--delay) * 4);  animation-iteration-count: infinite;}
+
+

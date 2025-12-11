@@ -3,35 +3,87 @@ import {basket} from '@/tmp/some_tmp_pizza';
 import {IPizza} from '@/shared/interfaces';
 import styles from './styles.module.scss';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Arrow from '@@/icons/Arrow.svg';
 import Button from '@/shared/Button';
 import BasketCard from '@/shared/BasketCard';
-
+import Loading from '@/shared/Loading';
 
 export default function BasketPage() {
-  const basket_list:IPizza[] = basket;
-  const changeAmount = (id:number, new_amount:number) =>{
-    basket_list[id].amount = new_amount;
-    console.log(new_amount)
-  }
+  const [basketList, setBasketList] = useState<IPizza[]>();
+
+  useEffect(() => {
+    const savedBasket = localStorage.getItem('basket');
+    if (savedBasket) {
+      try {
+        const parsedBasket = JSON.parse(savedBasket);
+        if (Array.isArray(parsedBasket) && parsedBasket.length > 0) {
+          setBasketList(parsedBasket);
+          return;
+        }
+      } catch (error) {
+        console.error('Ошибка парсинга корзины:', error);
+      }
+    }
+    
+    const initialBasket = basket.map((item, i) => ({
+      ...item,
+      amount: item.amount || 1,
+      id: i, 
+    }));
+    
+    localStorage.setItem('basket', JSON.stringify(initialBasket));
+    setBasketList(initialBasket);
+  }, []);
+
+  
+  const changeAmount = (pizzaId: number, newAmount: number) => {
+    const updatedBasket = basketList?.map(pizza => {
+      if (pizza.id === pizzaId) {
+        return { ...pizza, amount: newAmount };
+      }
+      return pizza;
+    });
+    
+    setBasketList(updatedBasket);
+    localStorage.setItem('basket', JSON.stringify(updatedBasket));
+  };
+  
+  const removeItem = (pizzaId: number) => {
+    const updatedBasket = basketList?.filter(pizza => pizza.id !== pizzaId);
+    setBasketList(updatedBasket);
+    localStorage.setItem('basket', JSON.stringify(updatedBasket));
+  };
   return (
     <div className={styles.container}>
       <h2 className={styles.tittle}>
         My Basket
       </h2>
+      
       <Link className={styles.arrow} href={'/home'}>
         <Arrow/>
       </Link>
-      <ul className={styles.menu}>
-       {basket_list.map((pizza:IPizza, i) => (
-          <li key={i} className={styles.locationItem}>
-            <BasketCard name={pizza.name} cost={pizza.cost} amount={pizza.amount||0} currency='р' changeAmount={changeAmount} id={i}/>
-          </li>
-        ))}
+      
+      {
+      (basketList==undefined)? <div className={styles.loading}><Loading/></div>:
+      basketList.length === 0 ? (
+          <p className={styles.loading}>Ваша корзина пуста</p>
+      ) : (
+        <ul className={styles.menu}>
+          {basketList.map((pizza: IPizza) => (
+            <li key={pizza.id} className={styles.locationItem}>
+              <BasketCard 
+                name={pizza.name} 
+                cost={pizza.cost} 
+                amount={pizza.amount || 1} 
+                currency='р' 
+                changeAmount={(newAmount) => changeAmount((pizza.id==undefined)? 0: pizza.id, newAmount)}
+                removeItem={() => removeItem((pizza.id==undefined)? 0: pizza.id)}
+              />
+            </li>
+          ))}
         </ul>
-
+      )}
     </div>
-    
-  )
+  );
 }

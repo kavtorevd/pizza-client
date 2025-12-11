@@ -7,8 +7,20 @@
 
 .menu{
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap:24px;
+  grid-template-columns: repeat(5, 1fr);
+  @include media(xl) {
+  grid-template-columns: repeat(4, 1fr);
+  }
+  @include media(md) {
+  grid-template-columns: repeat(3, 1fr);
+  }
+  @include media(sm) {
+  grid-template-columns: repeat(2, 1fr);
+  }
+  @include media(3xs) {
+  grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .location_line{

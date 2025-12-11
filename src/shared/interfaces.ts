@@ -21,6 +21,7 @@ export interface IPizza{
     cost:number,
     sale:number,
     amount?: number, 
+    id?:number,
 }
 
 export interface ILocation{
