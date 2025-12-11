@@ -1,21 +1,31 @@
 @import '@/shared/styles/main';
-.container{
+
+.container {
   width: 100%;
   border-radius: 12px;
   display: flex;
   flex-direction: row;
   padding: 8px;
-  gap:8px;
+  gap: 8px;
   box-shadow: 0 4px 6px 0 $shadow-primary-color;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
 }
 
-.image_container{
+.main_content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex: 1;
+}
+
+.image_container {
   height: 100%;
   aspect-ratio: 1/1;
   overflow-y: hidden;
   border-radius: 8px;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -26,22 +36,76 @@
   object-fit: cover;
 }
 
-.sale{
+.sale {
   color: $attention-text-color;
   font-weight: 600;
 }
 
-.cost_line{
+.cost_line {
   display: flex;
   flex-direction: row;
-  gap:8px;
+  gap: 8px;
 }
 
-.def_price__saled{
+.def_price__saled {
   text-decoration: line-through;
 }
 
-.text_content{
+.text_content {
   display: flex;
   flex-direction: column;
+  flex: 1;
+}
+
+.name_line {
+  margin-bottom: 8px;
+}
+
+.button {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid $gray;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.amount_line {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.amount {
+  margin: 0 15px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.remove_button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #999;
+  font-size: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.remove_button:hover {
+  color: #ff4444;
 }
