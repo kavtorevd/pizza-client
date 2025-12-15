@@ -1,0 +1,171 @@
+@import '@/shared/styles/main';
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  gap: 8px;
+  box-shadow: 0 4px 6px 0 $shadow-primary-color;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  flex-shrink: 1;
+  overflow: hidden;
+  &:hover {
+    background-color: $input-border-color;
+  }
+  transition: background-color 0.9s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.main_content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  @include media(3xs){
+      grid-template-columns:  1fr auto;
+  }
+  grid-template-rows: auto 40px;
+  flex-direction: row;
+  flex: 1;
+  min-width: 0;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.image_container {
+  height: 100%;
+  aspect-ratio: 1/1;
+  max-height: 120px;
+  min-height: 60px;
+  overflow: hidden;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: center;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.image_container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sale {
+  color: $attention-text-color;
+  font-weight: 600;
+}
+
+.cost_line {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.def_price__saled {
+  text-decoration: line-through;
+}
+
+.text_content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  margin-top: 12px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.name_line {
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.button {
+  width: 25px;
+  height: 25px;
+  border: 2px;
+  border-radius: 50%;
+  border: 1px solid $gray;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+  background-color: #{$bg-primary-color}70;
+  &:hover{
+    background-color: $bg-primary-color;
+  }
+  transition: all 0.5s;
+}
+
+.amount_line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.amount {
+  margin: 0 15px;
+  min-width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+  margin-bottom: 3px;
+  margin-top: 10px;
+}
+
+.remove_button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #999;
+  font-size: 30px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 0;
+  transition: color 0.2s;
+  flex-shrink: 0;
+  margin-left: 0;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  opacity: 0.5;
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.remove_button:hover {
+  color: #ff4444;
+}
+
+// Дополнительно: если нужна адаптивность
+@include media(sm) {
+  .container {
+    flex-wrap: wrap;
+  }
+  
+  .main_content {
+    width: 100%;
+  }
+}

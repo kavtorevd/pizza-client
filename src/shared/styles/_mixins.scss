@@ -1,0 +1,84 @@
+$screen-3xs: 360px;
+$screen-2xs: 475px;
+$screen-xs: 600px;
+$screen-sm: 744px;
+$screen-md: 992px;
+$screen-lg: 1024px;
+$screen-xl: 1280px;
+$screen-2xl: 1440px;
+$screen-3xl: 1600px;
+$screen-4xl: 1920px;
+
+@mixin media($size) {
+  @if ($size == 3xs) {
+    @media only screen and (width <= $screen-3xs) {
+      @content;
+    }
+  }
+  @if ($size == 2xs) {
+    @media only screen and (width <= $screen-2xs) {
+      @content;
+    }
+  }
+  @if ($size == xs) {
+    @media only screen and (width <= $screen-xs) {
+      @content;
+    }
+  }
+  @if ($size == sm) {
+    @media only screen and (width <= $screen-sm) {
+      @content;
+    }
+  }
+  @if ($size == md) {
+    @media only screen and (width <= $screen-md) {
+      @content;
+    }
+  }
+  @if ($size == lg) {
+    @media only screen and (width <= $screen-lg) {
+      @content;
+    }
+  }
+  @if ($size == xl) {
+    @media only screen and (width <= $screen-xl) {
+      @content;
+    }
+  }
+  @if ($size == 2xl) {
+    @media only screen and (width <= $screen-2xl) {
+      @content;
+    }
+  }
+  @if ($size == 3xl) {
+    @media only screen and (width <= $screen-3xl) {
+      @content;
+    }
+  }
+  @if ($size == 4xl) {
+    @media only screen and (width <= $screen-4xl) {
+      @content;
+    }
+  }
+}
+
+@mixin orientation($orientationType) {
+  @if ($orientationType == portrait) {
+    @media (orientation: portrait) {
+      @content;
+    }
+  }
+  @if ($orientationType == landscape) {
+    @media (orientation: landscape) {
+      @content;
+    }
+  }
+}
+
+@mixin paragraph-primary-style {
+  font-family: $font-Normal;
+  font-weight: $text-medium-weight;
+  font-size: $size-18;
+  line-height: $size-25;
+  color: $brown;
+}

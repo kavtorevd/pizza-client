@@ -1,0 +1,45 @@
+@import '@/shared/styles/main';
+.container{
+  width: 100%;
+  aspect-ratio: 1/1.16;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap:8px;
+  max-width: 200px;
+  box-shadow: 0 4px 6px 0 $shadow-primary-color;
+  justify-content: space-around;
+  background-color: $bg-primary-color;
+}
+
+.image_container{
+  width: 100%;
+  aspect-ratio: 1.45/1;
+  overflow-y: hidden;
+  border-radius: 8px;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.image_container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sale{
+  color: $attention-text-color;
+    font-weight: 600;
+}
+
+.cost_line{
+  display: flex;
+  flex-direction: row;
+  gap:8px;
+}
+
+.def_price__saled{
+  text-decoration: line-through;
+}
