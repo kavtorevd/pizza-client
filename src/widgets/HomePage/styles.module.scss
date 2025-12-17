@@ -37,12 +37,24 @@
 }
 
 .last_location_line{
-  font-size: $text-third-size;
+  font-size: $text-secondary-size;
   color: $text-primary-color;
   font-weight: 400;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  span{
+    margin-left: 10px;
+    color: $title-primary-color;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 50vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 .location_choose_line{
-  font-size: $text-primary-size;
+  font-size: $subtitle-primary-size;
   color: $text-primary-color;
   font-weight: 600;
   opacity: 0.6;
@@ -50,7 +62,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-family: $font-Thin;
   gap: 13px;
+  &:hover{
+    opacity: 0.9;
+  }
 }
 
 .cart{

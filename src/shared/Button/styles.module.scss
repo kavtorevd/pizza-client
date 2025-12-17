@@ -20,8 +20,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  &:hover{
+  &:hover, &:focus{
     opacity: $btn-primary-hover-opacity;
+    transition: all 0.3s ease-in-out;
   }
+  transition: all 0.3s ease-in-out;
 }
 

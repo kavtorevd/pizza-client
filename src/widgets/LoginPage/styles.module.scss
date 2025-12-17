@@ -44,28 +44,43 @@
   }
 
   .sub_button {
-
     margin-bottom: 5vh;
     margin-top: 20px;
   }
 
+  .linkStyle
+  {
+    color: $link-color;
+    margin: 5px auto;
+    &:first-child{
+      margin-top: 10px;
+    }
+    &:hover{
+      opacity: 0.5;
+    }
+  }
+
 @include media(sm){
     .form{
-    min-height: 100vh;
+    min-height: 90vh;
   }
   .sub_button{
     margin-top: auto; 
   }
-
+  
 }
 
-
-@include media(sm){
-    .form{
-    min-height: 100vh;
+@include media(3xs){
+  
+  .linkStyle{
+    font-size: $text-third-size;
   }
-  .sub_button{
-    margin-top: auto; 
+  .container> input {
+    font-size: $text-secondary-size;
+    padding: 5px;
+    line-height:  calc( $text-primary-size + 10px);
   }
-
+  .login_checkbox{
+     font-size: $text-secondary-size;
+  }
 }

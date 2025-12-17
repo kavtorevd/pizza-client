@@ -1,0 +1,44 @@
+@import '@/shared/styles/main';
+
+.menu{
+  display: grid;
+  gap:24px;
+  grid-template-columns: repeat(5, 1fr);
+  @include media(xl) {
+  grid-template-columns: repeat(4, 1fr);
+  }
+  @include media(md) {
+  grid-template-columns: repeat(3, 1fr);
+  }
+  @include media(sm) {
+  grid-template-columns: repeat(2, 1fr);
+  }
+  @include media(3xs) {
+  grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.cart{
+  position: fixed;
+  top:54px;
+  right: 24px;
+  background-color: $bg-primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  height: 42px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px 0 $shadow-primary-color;
+}
+
+.loading{
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50vh;
+  overflow: hidden;
+}

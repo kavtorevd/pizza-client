@@ -8,6 +8,7 @@ import Arrow from '@@/icons/Arrow.svg';
 import Button from '@/shared/Button';
 import BasketCard from '@/shared/BasketCard';
 import Loading from '@/shared/Loading';
+import { ROUTING } from '@/shared/routing';
 
 export default function BasketPage() {
   const [basketList, setBasketList] = useState<IPizza[]>();
@@ -60,7 +61,7 @@ export default function BasketPage() {
         My Basket
       </h2>
       
-      <Link className={styles.arrow} href={'/home'}>
+      <Link className={styles.arrow} href={ROUTING.home.href}>
         <Arrow/>
       </Link>
       

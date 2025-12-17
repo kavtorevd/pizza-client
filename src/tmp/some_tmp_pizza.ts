@@ -53,14 +53,26 @@ export const pizzas = [
 ];
 
 
-export const addresses= [
-    {address:'asdasdasdasd',
-        name:'Home'
-    },
-    {address:'asdasdasdasd',
-    name:'Company'
-    },
-]
+export const addresses = [
+  {
+    id: 1,
+    address: 'ул. Ленина, д. 1, Москва',
+    name: 'Home',
+    lat: 55.7558,  
+    lng: 37.6173, 
+    deliveryTime: '30-40 мин',
+    minOrder: 500
+  },
+  {
+    id: 2,
+    address: 'пр-т Мира, д. 25, Москва',
+    name: 'Company',
+    lat: 55.7812, 
+    lng: 37.6335,   
+    deliveryTime: '40-50 мин',
+    minOrder: 700
+  },
+]; 
 
 
 export const basket = [

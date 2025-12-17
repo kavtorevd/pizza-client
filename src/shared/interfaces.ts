@@ -24,7 +24,18 @@ export interface IPizza{
     id?:number,
 }
 
-export interface ILocation{
-    name:string,
-    address:string,
+export interface ILocation {
+  id?: number;
+  address: string;
+  name?: string;
+  lat: number;
+  lng: number; 
+  deliveryTime?: string;
+  minOrder?: number;
+}
+
+export interface ILocationPrint {
+  id?: number;
+  address: string;
+  name: string;
 }

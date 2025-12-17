@@ -1,15 +1,16 @@
 'use client'
 import {addresses} from '@/tmp/some_tmp_pizza';
-import {ILocation} from '@/shared/interfaces';
+import {ILocation, ILocationPrint} from '@/shared/interfaces';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import { useState } from 'react';
 import Arrow from '@@/icons/Arrow.svg';
 import Button from '@/shared/Button';
+import { ROUTING } from '@/shared/routing';
 
 
 export default function SelectLocationPage() {
- const address_list:ILocation[] = addresses;
+const address_list:ILocation[] = addresses;
 const [selectedLocation, setSelectedLocation] = useState<string>('')
   const [showNewLocation, setShowNewLocation] = useState(false)
   const [newLocation, setNewLocation] = useState('')
@@ -27,7 +28,7 @@ const [selectedLocation, setSelectedLocation] = useState<string>('')
       <h2 className={styles.tittle}>
         My Locations
       </h2>
-      <Link className={styles.arrow} href={'/home'}>
+      <Link className={styles.arrow} href={ROUTING.home.href}>
         <Arrow/>
       </Link>
       <div className={styles.menu}>
@@ -57,7 +58,7 @@ const [selectedLocation, setSelectedLocation] = useState<string>('')
         >
           + Add New Location
         </button>
-      ) : (
+      ) : (<>
         <div className={styles.newLocationInput}>
           <input
             type="text"
@@ -74,6 +75,9 @@ const [selectedLocation, setSelectedLocation] = useState<string>('')
             Save
           </button>
         </div>
+        <Link href={ROUTING.select_location_map_page.href}>
+        <div className={styles.linkButton}>Указать на карте</div></Link>
+        </>
       )}
       </div>
       <Button href={'/home'} className={styles.sub_button}>Apply</Button>

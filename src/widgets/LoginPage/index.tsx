@@ -5,6 +5,8 @@ import Button from "@/shared/Button";
 import styles from './styles.module.scss'
 import { useState } from "react";
 import {PLACEHOLDERS} from '@/shared/constants'
+import Link from 'next/link';
+import { ROUTING } from '@/shared/routing';
 
 
 export default function LoginPage({type}:{type:string}) {
@@ -56,6 +58,8 @@ export default function LoginPage({type}:{type:string}) {
         </label>
       </div>
        <Button href={'/home'} type="submit" className={styles.sub_button}>{(type=='Registration')?'Register':'Sign in'}</Button>
+       {(type=='Login')&&<Link href={ROUTING.registration.href} className={styles.linkStyle}>Еще не зарегистрирированы?</Link>}
+       <Link href={ROUTING.home.href} className={styles.linkStyle}>Зайти без авторизации</Link>
     </form>
   )
 }

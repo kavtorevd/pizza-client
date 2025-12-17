@@ -5,6 +5,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: $content-preferred-width;
 }
 
 .menu {
@@ -130,4 +132,17 @@
 .sub_button {
   margin-top: auto; 
   margin-bottom: 5vh;
+}
+.linkButton{
+  background-color: $btn-primary-bg-color;
+  color: $btn-primary-text-color;
+  width: 100%;
+  border-radius: 28px;
+  padding: 16px 0;
+  max-height: 53px;
+  text-align: center;
+  &:hover, &:focus{
+    opacity: 0.5;
+ } 
+ transition: all 0.3s ease-in-out;
 }
