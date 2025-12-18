@@ -17,7 +17,6 @@ const [selectedLocation, setSelectedLocation] = useState<string>('')
 
   const handleAddLocation = () => {
     if (newLocation.trim()) {
-      console.log('New location:', newLocation)
       setNewLocation('')
       setShowNewLocation(false)
     }

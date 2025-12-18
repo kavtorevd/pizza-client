@@ -14,6 +14,24 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
   const markerRef = useRef<L.Marker | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Функция для получения адреса по координатам
+  const reverseGeocode = async (lat: number, lng: number): Promise<string> => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+      );
+      const data = await response.json();
+      
+      if (data.display_name) {
+        return data.display_name;
+      }
+    } catch (error) {
+      console.error('Ошибка геокодирования:', error);
+    }
+    // Если не получилось получить адрес, возвращаем координаты
+    return `Координаты: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  };
+
   // Инициализация карты
   useEffect(() => {
     if (typeof window === 'undefined' || !containerRef.current) return;
@@ -32,9 +50,12 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
     }
 
     // Обработчик клика
-    const handleMapClick = (e: L.LeafletMouseEvent) => {
+    const handleMapClick = async (e: L.LeafletMouseEvent) => {
       const { lat, lng } = e.latlng;
       const coords: [number, number] = [lat, lng];
+      
+      // Получаем адрес по координатам
+      const address = await reverseGeocode(lat, lng);
       
       // Создаем или перемещаем маркер
       if (markerRef.current) {
@@ -51,16 +72,16 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
         }).addTo(mapRef.current!);
         
         // Обработчик перетаскивания
-        markerRef.current.on('dragend', (e) => {
+        markerRef.current.on('dragend', async (e) => {
           const marker = e.target;
           const position = marker.getLatLng();
-          onLocationSelect([position.lat, position.lng], 
-            `Координаты: ${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}`);
+          const address = await reverseGeocode(position.lat, position.lng);
+          onLocationSelect([position.lat, position.lng], address);
         });
       }
       
-      // Вызываем колбэк
-      onLocationSelect(coords, `Координаты: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+      // Вызываем колбэк с адресом
+      onLocationSelect(coords, address);
     };
 
     mapRef.current.on('click', handleMapClick);
@@ -94,12 +115,18 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
       }).addTo(mapRef.current);
       
       // Обработчик перетаскивания
-      markerRef.current.on('dragend', (e) => {
+      markerRef.current.on('dragend', async (e) => {
         const marker = e.target;
         const position = marker.getLatLng();
-        onLocationSelect([position.lat, position.lng], 
-          `Координаты: ${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}`);
+        const address = await reverseGeocode(position.lat, position.lng);
+        onLocationSelect([position.lat, position.lng], address);
       });
+      
+      // При создании маркера с initialCoords тоже получаем адрес
+      reverseGeocode(initialCoords[0], initialCoords[1])
+        .then(address => {
+          onLocationSelect(initialCoords, address);
+        });
     }
   }, [initialCoords, onLocationSelect]); // Срабатывает при изменении initialCoords
 
