@@ -5,40 +5,56 @@ import Link from 'next/link';
 import Imagetmp from "@@/images/image.png";
 import Image from 'next/image';
 
-
 interface ICard {
   name: string;
   image?: string| undefined;
-  href?:string | undefined;
   cost: number;
   sale?: number | undefined;
-  currency:string;
+  currency: string;
+  onAddToCart?: () => void; // ← добавляем пропс
 }
 
-const Card= ({
+const Card = ({
   name,
   image,
-  href,
   cost,
   sale,
-  currency
-}:ICard) => (
+  currency,
+  onAddToCart // ← принимаем пропс
+}: ICard) => (
   <div className={styles.container}>
     <div className={styles.image_container}>
       <Image
-            className={styles.articleImg}
-            src={image||Imagetmp.src}
-            width={400}
-            height={300}
-            alt={`картинка`}
-            priority
+        className={styles.articleImg}
+        src={image||Imagetmp.src}
+        width={400}
+        height={300}
+        alt={`картинка`}
+        priority
       />
     </div>
+  
+      {onAddToCart && (
+        <button 
+          onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onAddToCart();
+      }}
+        className={styles.addButton}
+        title="Добавить в корзину"
+      >
+        +
+      </button>
+    )}
+    
     <div className={styles.name_line}>{name}</div>
     <div className={styles.cost_line}>
-        <div className={cn(styles.def_price, sale&&styles.def_price__saled )}>{cost + currency}</div>
-        {sale&&<div className={styles.sale}>{sale + currency}</div>}
+      <div className={cn(styles.def_price, sale && styles.def_price__saled)}>
+        {cost + currency}
       </div>
+      {sale && <div className={styles.sale}>{sale + currency}</div>}
+    </div>
   </div>
 );
 

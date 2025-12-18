@@ -1,0 +1,58 @@
+@import '@/shared/styles/main';
+
+.container{
+  padding: $content-standart-padding;
+  min-height: 100vh;
+  font-size: $text-primary-size;
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+  width: 100%;
+  max-width: $content-max-width;
+  h3{
+      font-weight: normal;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap:12px;
+  max-width: $content-max-width;
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0 auto;
+  margin-bottom:4px;
+    &:focus, &:hover{
+    overflow-x: scroll;
+    margin-bottom: 0px;
+  }
+  &::-webkit-scrollbar {
+     height: 4px; 
+   }
+}
+
+.tittle {
+  font-size: $title-secondary-size;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.loading{
+  margin: auto auto;
+}
+
+.num_tittle{
+  font-size: $text-primary-size;
+  color: $title-primary-color;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-family: $font-Normal;
+  margin-right: 5px;
+}
+
+.cusNumber{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+}

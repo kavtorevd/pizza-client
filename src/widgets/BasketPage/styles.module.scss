@@ -136,3 +136,18 @@
 .loading{
   margin: auto auto;
 }
+
+.linkButton{
+  background-color: $btn-primary-bg-color;
+  color: $btn-primary-text-color;
+  width: 100%;
+  border-radius: 28px;
+  padding: 16px 0;
+  max-height: 53px;
+  text-align: center;
+  margin-top: 10px;
+  &:hover, &:focus{
+    opacity: 0.5;
+ } 
+ transition: all 0.3s ease-in-out;
+}

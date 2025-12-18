@@ -23,4 +23,12 @@ export const ROUTING = {
         href: '/map',
         name: 'указать локацию на карте',
     },
+    confirm_order:{
+        href: '/confirm_order',
+        name: 'подтвердить заказ',
+    },
+    pizza_info:{
+        href: '/pizza',
+        name: 'пицца',
+    },
 }

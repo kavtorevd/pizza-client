@@ -5,49 +5,65 @@ export const pizzas = [
         name:'Пепперони1',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: '12312321321312321312',
+        id:0,
     },
     {
         name:'Пепперони2',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: 'sadasdasdas',
+        id:1,
     },
     {
         name:'Пепперони3',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: 'sdefjfjksdksfdkjsdjkjsdfjkksjdfjkdsfs',
+        id:2,
     },
     {
         name:'Пепперони4',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: 'sdasdasssssssssssssssssssss',
+        id:3,
     },
     {
         name:'Пепперони5',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: 'wqeeeeeeeeeeeeeeeeeeeeeeeeeeeedsa',
+        id:4,
     },
     {
         name:'Пепперони6',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        description: 'weqqqqqqqqassssssdsdaasaaaaaaaaa',
+        sale:32,
+        id:5,
     },
     {
         name:'Пепперони7',
         image:Imagetmp.src,
         cost:123,
-        sale:32
+        sale:32,
+        description: 'wqeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedsa',
+        id:6,
     },
     {
         name:'Пепперони8',
         image:Imagetmp.src,
+        description: 'sdaaaaasaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         cost:123,
-        sale:32
+        sale:32,
+        id:7,
     },
     
 ];

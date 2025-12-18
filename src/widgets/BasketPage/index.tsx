@@ -71,8 +71,8 @@ export default function BasketPage() {
           <p className={styles.loading}>Ваша корзина пуста</p>
       ) : (
         <ul className={styles.menu}>
-          {basketList.map((pizza: IPizza) => (
-            <li key={pizza.id} className={styles.locationItem}>
+          {basketList.map((pizza: IPizza, i) => (
+            <li key={pizza.id} className={styles.locationItem} key={i}>
               <BasketCard 
                 name={pizza.name} 
                 cost={pizza.cost} 
@@ -85,6 +85,9 @@ export default function BasketPage() {
           ))}
         </ul>
       )}
+      <Link href={ROUTING.confirm_order.href}>
+        <div className={styles.linkButton}>Apply</div>
+      </Link>
     </div>
   );
 }

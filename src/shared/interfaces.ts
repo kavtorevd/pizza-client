@@ -22,6 +22,7 @@ export interface IPizza{
     sale:number,
     amount?: number, 
     id?:number,
+    description?:string;
 }
 
 export interface ILocation {

@@ -11,6 +11,8 @@
   box-shadow: 0 4px 6px 0 $shadow-primary-color;
   justify-content: space-around;
   background-color: $bg-primary-color;
+  position: relative;
+  color: $text-primary-color;
 }
 
 .image_container{
@@ -42,4 +44,16 @@
 
 .def_price__saled{
   text-decoration: line-through;
+}
+
+.addButton{
+  position: absolute;
+  bottom: 2px;
+  right: 10px;
+  font-size: 30px;
+  border: 0;
+  opacity: 0.3;
+  &:hover, &:focus{
+    opacity: 0.7;
+  }
 }

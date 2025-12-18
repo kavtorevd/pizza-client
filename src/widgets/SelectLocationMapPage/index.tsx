@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addresses } from '@/tmp/some_tmp_pizza';
 import { ILocation } from '@/shared/interfaces';
 import styles from './styles.module.scss';
@@ -23,6 +23,25 @@ export default function SelectLocationMapPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showGeoRequest, setShowGeoRequest] = useState(false);
 
+  // При загрузке проверяем сохраненный адрес
+  useEffect(() => {
+    const savedLocations = localStorage.getItem('selectedLocations');
+    if (savedLocations) {
+      try {
+        const locations = JSON.parse(savedLocations);
+        
+        // Показываем последний выбранный
+        if (locations.length > 0) {
+          const lastLocation = locations[0];
+          setSelectedCoords([lastLocation.lat, lastLocation.lng]);
+          setAddress(lastLocation.address || '');
+        }
+      } catch (error) {
+        console.error('Ошибка чтения сохраненных местоположений:', error);
+      }
+    }
+  }, []);
+
   // Показать нашу модалку
   const requestGeolocation = () => {
     setShowGeoRequest(true);
@@ -37,16 +56,8 @@ export default function SelectLocationMapPage() {
   // Ошибка геолокации
   const handleGeolocationError = (error: GeolocationPositionError) => {
     console.error('Ошибка геолокации:', error);
-    
     if (error.code === 1) {
-      // PERMISSION_DENIED
       alert('Вы отказали в доступе к геолокации. Выберите адрес на карте.');
-    } else if (error.code === 2) {
-      // POSITION_UNAVAILABLE
-      alert('Не удалось определить местоположение. Проверьте подключение к интернету.');
-    } else if (error.code === 3) {
-      // TIMEOUT
-      alert('Время ожидания определения местоположения истекло.');
     }
   };
 
@@ -65,6 +76,8 @@ export default function SelectLocationMapPage() {
       
       if (data.display_name) {
         setAddress(data.display_name);
+      } else {
+        setAddress(`Координаты: ${lat.toFixed(6)}, ${lng.toFixed(6)}`);
       }
     } catch (error) {
       console.error('Ошибка геокодирования:', error);
@@ -76,36 +89,59 @@ export default function SelectLocationMapPage() {
   const handleLocationSelect = async (coords: [number, number], addr: string) => {
     setSelectedCoords(coords);
     setAddress(addr);
-    
-    const matchedAddress = addresses.find(loc => 
-      Math.abs(loc.lat - coords[0]) < 0.001 && 
-      Math.abs(loc.lng - coords[1]) < 0.001
-    );
-    
-    if (matchedAddress) {
-      setSelectedLocation(matchedAddress);
-    }
   };
 
   // Сохранить местоположение
-  const saveLocation = () => {
-    if (selectedLocation) {
-      localStorage.setItem('selectedLocation', JSON.stringify(selectedLocation));
-      window.location.href = ROUTING.home.href || '/';
-    } else if (selectedCoords) {
-      localStorage.setItem('selectedLocation', JSON.stringify({
-        address,
-        lat: selectedCoords[0],
-        lng: selectedCoords[1]
-      }));
-      window.location.href = ROUTING.home.href || '/';
-    }
+const saveLocation = () => {
+  if (!selectedCoords) {
+    alert('Выберите местоположение на карте');
+    return;
+  }
+
+  // Создаем новый объект с selected: true
+  const newLocation = {
+    address,
+    lat: selectedCoords[0],
+    lng: selectedCoords[1],
+    timestamp: new Date().toISOString(),
+    selected: true // ← добавляем поле selected
   };
+
+  // Читаем существующий список
+  const savedLocations = localStorage.getItem('selectedLocations');
+  const locations = savedLocations ? JSON.parse(savedLocations) : [];
+  
+  // Убираем selected: true со всех старых записей
+  const locationsWithoutSelected = locations.map((loc: any) => ({
+    ...loc,
+    selected: false
+  }));
+  
+  // Добавляем новый в начало списка с selected: true
+  const updatedLocations = [newLocation, ...locationsWithoutSelected];
+  
+  // Ограничиваем список
+  if (updatedLocations.length > 10) {
+    updatedLocations.pop();
+  }
+
+  // Сохраняем обратно в localStorage
+  localStorage.setItem('selectedLocations', JSON.stringify(updatedLocations));
+  localStorage.setItem('selectedLocation', JSON.stringify(newLocation));
+};
 
   if (isLoading) return <div className={styles.loading}><Loading/></div>;
 
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <Link href={ROUTING.home.href || '/'} className={styles.backButton}>
+          <Arrow className={styles.arrowIcon} />
+          <span>Назад</span>
+        </Link>
+        <h1 className={styles.title}>Выберите местоположение</h1>
+      </div>
+
       {/* Модалка запроса геолокации */}
       {showGeoRequest && (
         <GeolocationPermission
@@ -141,15 +177,14 @@ export default function SelectLocationMapPage() {
           </div>
 
           <div className={styles.actions}>
-            <Button
+            <Link 
               onClick={saveLocation}
-              disabled={!selectedCoords}
-              className={styles.saveButton}
+              href={selectedCoords ? ROUTING.select_location_page.href : '#'}
             >
-              Сохранить местоположение
-            </Button>
-            <Link href={ROUTING.select_location_page.href}>
-              <div  className={styles.linkButton}>Назад</div>
+              <div className={styles.linkButton}>Сохранить местоположение</div>
+            </Link>
+             <Link href={ROUTING.select_location_page.href}>
+              <div className={styles.linkButton}>Назад</div>
             </Link>
           </div>
         </div>

@@ -48,9 +48,10 @@
     color: $title-primary-color;
     font-weight: 600;
     display: inline-block;
-    max-width: 50vw;
+    max-width: 55vw;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 .location_choose_line{
