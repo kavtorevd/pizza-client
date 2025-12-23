@@ -1,7 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { addresses } from '@/tmp/some_tmp_pizza';
-import { ILocation } from '@/shared/interfaces';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import Arrow from '@@/icons/Arrow.svg';
@@ -9,28 +7,23 @@ import Button from '@/shared/Button';
 import { ROUTING } from '@/shared/routing';
 import dynamic from 'next/dynamic';
 import Loading from '@/shared/Loading';
-import GeolocationPermission from '@/features/GeolocationPermission';
 
 const LeafletMap = dynamic(() => import('@/entities/LeafletMap'), {
   ssr: false,
-  loading: () => <div className={styles.mapLoading}>Загрузка карты...</div>
+  loading: () =>  <div className={styles.loading}><Loading/></div>
 });
 
 export default function SelectLocationMapPage() {
-  const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<[number, number] | null>(null);
   const [address, setAddress] = useState<string>('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [showGeoRequest, setShowGeoRequest] = useState(false);
+  const [isGeoRequesting, setIsGeoRequesting] = useState(false);
 
-  // При загрузке проверяем сохраненный адрес
   useEffect(() => {
     const savedLocations = localStorage.getItem('selectedLocations');
     if (savedLocations) {
       try {
         const locations = JSON.parse(savedLocations);
         
-        // Показываем последний выбранный
         if (locations.length > 0) {
           const lastLocation = locations[0];
           setSelectedCoords([lastLocation.lat, lastLocation.lng]);
@@ -44,26 +37,36 @@ export default function SelectLocationMapPage() {
 
   // Показать нашу модалку
   const requestGeolocation = () => {
-    setShowGeoRequest(true);
-  };
-
-  // Успешное получение геолокации
-  const handleGeolocationSuccess = (coords: [number, number]) => {
-    setSelectedCoords(coords);
-    reverseGeocode(coords[0], coords[1]);
-  };
-
-  // Ошибка геолокации
-  const handleGeolocationError = (error: GeolocationPositionError) => {
-    console.error('Ошибка геолокации:', error);
-    if (error.code === 1) {
-      alert('Вы отказали в доступе к геолокации. Выберите адрес на карте.');
+    if (!navigator.geolocation) {
+      alert('Геолокация не поддерживается вашим браузером');
+      return;
     }
-  };
-
-  // Закрыть модалку
-  const handleCloseModal = () => {
-    setShowGeoRequest(false);
+    
+    setIsGeoRequesting(true);
+    
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords: [number, number] = [
+          position.coords.latitude,
+          position.coords.longitude
+        ];
+        setSelectedCoords(coords);
+        reverseGeocode(coords[0], coords[1]);
+        setIsGeoRequesting(false);
+      },
+      (error) => {
+        setIsGeoRequesting(false);
+        console.error('Ошибка геолокации:', error);
+        if (error.code === 1) {
+          alert('Вы отказали в доступе к геолокации. Выберите адрес на карте.');
+        }
+      },
+      { 
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
   };
 
   // Обратное геокодирование
@@ -91,46 +94,62 @@ export default function SelectLocationMapPage() {
     setAddress(addr);
   };
 
-  // Сохранить местоположение
+
 const saveLocation = () => {
   if (!selectedCoords) {
     alert('Выберите местоположение на карте');
     return;
   }
 
-  // Создаем новый объект с selected: true
+  if (!address || address === 'Кликните на карте для выбора' || address.startsWith('Координаты:')) {
+    alert('Укажите корректный адрес');
+    return;
+  }
+
+  const cleanAddress = address.trim().toLowerCase();
+  const savedLocations = localStorage.getItem('selectedLocations');
+  const locations = savedLocations ? JSON.parse(savedLocations) : [];
+
+  const existingLocation = locations.find((loc: any) => 
+    loc.address.trim().toLowerCase() === cleanAddress
+  );
+
+  if (existingLocation) {
+    const updatedLocations = locations.map((loc: any) => ({
+      ...loc,
+      selected: loc.address.trim().toLowerCase() === cleanAddress
+    }));
+    
+    localStorage.setItem('selectedLocations', JSON.stringify(updatedLocations));
+    localStorage.setItem('selectedLocation', JSON.stringify(existingLocation));
+    
+    alert('Этот адрес уже существует. Сделали его активным!');
+    return;
+  }
+
   const newLocation = {
-    address,
+    address: address.trim(),
     lat: selectedCoords[0],
     lng: selectedCoords[1],
     timestamp: new Date().toISOString(),
-    selected: true // ← добавляем поле selected
+    selected: true
   };
 
-  // Читаем существующий список
-  const savedLocations = localStorage.getItem('selectedLocations');
-  const locations = savedLocations ? JSON.parse(savedLocations) : [];
-  
-  // Убираем selected: true со всех старых записей
   const locationsWithoutSelected = locations.map((loc: any) => ({
     ...loc,
     selected: false
   }));
-  
-  // Добавляем новый в начало списка с selected: true
   const updatedLocations = [newLocation, ...locationsWithoutSelected];
   
-  // Ограничиваем список
+
   if (updatedLocations.length > 10) {
     updatedLocations.pop();
   }
 
-  // Сохраняем обратно в localStorage
-  localStorage.setItem('selectedLocations', JSON.stringify(updatedLocations));
-  localStorage.setItem('selectedLocation', JSON.stringify(newLocation));
-};
 
-  if (isLoading) return <div className={styles.loading}><Loading/></div>;
+    localStorage.setItem('selectedLocations', JSON.stringify(updatedLocations));
+    localStorage.setItem('selectedLocation', JSON.stringify(newLocation));
+  };
 
   return (
     <div className={styles.container}>
@@ -141,15 +160,6 @@ const saveLocation = () => {
         </Link>
         <h1 className={styles.title}>Выберите местоположение</h1>
       </div>
-
-      {/* Модалка запроса геолокации */}
-      {showGeoRequest && (
-        <GeolocationPermission
-          onSuccess={handleGeolocationSuccess}
-          onError={handleGeolocationError}
-          onClose={handleCloseModal}
-        />
-      )}
 
       <div className={styles.content}> 
         <div className={styles.mapSection}>
@@ -163,8 +173,9 @@ const saveLocation = () => {
           <Button 
             onClick={requestGeolocation}
             className={styles.currentLocationButton}
+            disabled={isGeoRequesting}
           >
-            📍 Моё местоположение
+            {isGeoRequesting ? 'Определяем...' : '📍 Моё местоположение'}
           </Button>
         </div>
 

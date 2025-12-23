@@ -5,6 +5,7 @@ async function submitOrder(orderData: any) {
       body: JSON.stringify(orderData),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Token 5a4fd672a7f4bcbe5537dc745db4fb827918d12a',
       },
       method: 'POST',
     }

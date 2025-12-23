@@ -97,21 +97,16 @@ export default function SelectLocationPage() {
     }
   };
 
-  // Функция выбора адреса (при клике на radio)
   const handleSelectAddress = (index: number) => {
     setSelectedLocation(`location${index}`);
-    
-    // Обновляем поле selected в localStorage
     const savedLocations = localStorage.getItem('selectedLocations');
     if (savedLocations) {
       const locations = JSON.parse(savedLocations);
       
-      // Сбрасываем все selected: false
       locations.forEach((loc: any) => {
         loc.selected = false;
       });
       
-      // Устанавливаем selected: true для выбранного
       if (locations[index]) {
         locations[index].selected = true;
         saveSelectedLocation(locations[index]);
@@ -120,14 +115,59 @@ export default function SelectLocationPage() {
       localStorage.setItem('selectedLocations', JSON.stringify(locations));
     }
   };
+    const handleAddLocation = async () => {
+    if (!newLocation.trim()) return;
+    const cleanNewLocation = newLocation.trim().toLowerCase();
+    const savedLocations = localStorage.getItem('selectedLocations');
+    const existingLocations = savedLocations ? JSON.parse(savedLocations) : [];
+    const isDuplicate = existingLocations.some((loc: any) => 
+        loc.address.trim().toLowerCase() === cleanNewLocation
+    );
 
-  const handleAddLocation = () => {
-    if (newLocation.trim()) {
-      setNewLocation('');
-      setShowNewLocation(false);
+    if (isDuplicate) {
+        alert('Этот адрес уже сохранен в вашей истории');
+        return;
     }
-  }
+    try {
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(newLocation)}&limit=1`
+        );
+        const data = await response.json();
+        if (!data || data.length === 0) {
+            alert('Адрес не найден. Проверьте правильность написания.');
+            return;
+        }
+        const location = {
+            address: newLocation.trim(),
+            lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon),
+            timestamp: new Date().toISOString(),
+            selected: true
+        };
 
+        setNewLocation('');
+        setShowNewLocation(false);
+
+        const savedLocations = localStorage.getItem('selectedLocations');
+        const locations = savedLocations ? JSON.parse(savedLocations) : [];
+        const locationsWithoutSelected = locations.map((loc: any) => ({
+            ...loc,
+            selected: false
+        }));
+        
+        const updatedLocations = [location, ...locationsWithoutSelected];
+        
+        if (updatedLocations.length > 10) {
+            updatedLocations.pop();
+        }
+        localStorage.setItem('selectedLocations', JSON.stringify(updatedLocations));
+        localStorage.setItem('selectedLocation', JSON.stringify(location));
+        window.location.reload();
+    } catch (error) {
+        console.error('Ошибка проверки адреса:', error);
+        alert('Не удалось проверить адрес. Попробуйте еще раз.');
+    }
+};
   return (
     <div className={styles.container}>
       <h2 className={styles.tittle}>

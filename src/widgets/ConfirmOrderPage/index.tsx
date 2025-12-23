@@ -71,9 +71,12 @@ export default function ConfirmOrderPage() {
   
   useEffect(() => {
     const savedLocation = localStorage.getItem('selectedLocation');
+    const savedNum = localStorage.getItem('userPhone');
+    console.log(savedNum)
     if (savedLocation) {
       try {
         setSelectedLocation(JSON.parse(savedLocation||''));
+        setPhone(savedNum||'');
       } catch (error) {
         console.error('Ошибка чтения выбранного адреса:', error);
       }
@@ -114,13 +117,13 @@ export default function ConfirmOrderPage() {
 
       <h3 className={styles.cusNumber}>
         <span className={styles.num_tittle}>Ваш номер:</span>
-        <IMaskInput
+        {(phone=='')?<IMaskInput
           mask="+7 (000) 000-00-00"
           value={phone}
           onAccept={setPhone}
           placeholder={PLACEHOLDERS.number_placeholder}
           id={'number-input'}
-        />
+        />:phone}
       </h3>
       <h3 className={styles.totalAmount}>
         <span className={styles.num_tittle}>Общая сумма:</span>
@@ -155,12 +158,21 @@ export default function ConfirmOrderPage() {
           </ul>
         )
       }
-      
+      <div className={styles.location_tittle}>
+          {!phone.trim() 
+          ? 'не корректный номер телефона'
+          : totalAmount == 0
+              ? 'корзина пуста'
+              : !selectedLocation
+                  ? 'не выбрана локация'
+                  : selectedLocation.address
+          }
+        </div>
       <div className={styles.submitContainer}>
         <Button
           onClick={handleSubmit}
           disabled={isSubmitting || !basketList || basketList.length === 0 || !phone.trim() || !selectedLocation}
-          className={cn(styles.submitButton, (!selectedLocation||!phone.trim())&&styles.deactiveSubmite)}>
+          className={cn(styles.submitButton, (!selectedLocation||!phone.trim()||totalAmount==0)&&styles.deactiveSubmite)}>
           {isSubmitting ? 'Отправка...' : 'Оформить заказ'}
         </Button>
       </div>

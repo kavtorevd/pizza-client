@@ -56,6 +56,15 @@ export interface IUser {
   name: string;
 }
 
+export interface IUserAll{
+  exists: boolean,
+  id: number,
+  username: string,
+  password: string,
+  name: string,
+  phone_number: string
+}
+
 export interface IOrderItem {
   pizza: number,
   pizza_name: string,
