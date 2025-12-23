@@ -32,19 +32,28 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
     return `Координаты: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
   };
 
+  // Создаем пользовательскую иконку один раз (оптимизация)
+  const customIcon = useRef(L.divIcon({
+    html: '<span style="font-size:2em">📍</span>',
+    className: 'custom-marker', 
+    iconSize: [30, 30],
+    iconAnchor: [15, 30]
+  })).current;
+
   // Инициализация карты
   useEffect(() => {
     if (typeof window === 'undefined' || !containerRef.current) return;
 
     // Создаем карту только один раз
     if (!mapRef.current) {
-      mapRef.current = L.map(containerRef.current).setView(
+      mapRef.current = L.map(containerRef.current, {
+        attributionControl: false // ← ВОТ ИСПРАВЛЕНИЕ: убираем флаг
+      }).setView(
         initialCoords || [55.7558, 37.6173], 
         13
       );
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
         maxZoom: 19,
       }).addTo(mapRef.current);
     }
@@ -63,12 +72,7 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
       } else {
         markerRef.current = L.marker(coords, { 
           draggable: true,
-          icon: L.divIcon({
-            html: '<span style="font-size:2em">📍</span>',
-            className: 'custom-marker', 
-            iconSize: [30, 30],
-            iconAnchor: [15, 30]
-          })
+          icon: customIcon
         }).addTo(mapRef.current!);
         
         // Обработчик перетаскивания
@@ -106,12 +110,7 @@ export default function LeafletMap({ onLocationSelect, initialCoords }: LeafletM
     } else {
       markerRef.current = L.marker(initialCoords, { 
         draggable: true,
-        icon: L.divIcon({
-          html: '<span style="font-size:2em">📍</span>',
-          className: 'custom-marker',
-          iconSize: [30, 30],
-          iconAnchor: [15, 30]
-        })
+        icon: customIcon
       }).addTo(mapRef.current);
       
       // Обработчик перетаскивания

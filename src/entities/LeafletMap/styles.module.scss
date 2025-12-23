@@ -7,5 +7,6 @@
   line-height: 1;
 
 }
-
-
+.container :global(.leaflet-control-attribution) {
+  display: none !important;
+}
