@@ -31,4 +31,8 @@ export const ROUTING = {
         href: '/pizza',
         name: 'пицца',
     },
+    track_order:{
+        href: '/track_order',
+        name: 'статус заказа',
+    },
 }

@@ -1,0 +1,631 @@
+@import '@/shared/styles/main';
+
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  
+  .backButton {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    margin-right: 20px;
+    
+    .arrowIcon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+    
+    &:hover {
+      color: #0070f3;
+    }
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    flex-grow: 1;
+  }
+
+  .lastUpdated {
+    font-size: 14px;
+    color: #666;
+    margin-left: 20px;
+  }
+}
+
+.content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  height: calc(100vh - 80px);
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.mapSection {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mapWrapper {
+  flex: 1;
+  min-height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+  overflow-y: auto;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+.orderStatus {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  
+  &.pending {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+  }
+  
+  &.accepted, &.assigned {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+  }
+  
+  &.preparing {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  &.on_way {
+    background: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+  }
+  
+  &.delivered {
+    background: #d1f7c4;
+    color: #276749;
+    border: 1px solid #c6f6d5;
+  }
+  
+  &.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+}
+
+.statusIcon {
+  font-size: 24px;
+}
+
+.statusText {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.deliveryTime {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.timeInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #e8f5e9;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+  margin-bottom: 15px;
+}
+
+.timeIcon {
+  font-size: 24px;
+}
+
+.timeText {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.routeInfo {
+  display: grid;
+  gap: 10px;
+}
+
+.routeItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.routeLabel {
+  color: #666;
+  font-size: 14px;
+}
+
+.routeValue {
+  font-weight: 500;
+  color: #333;
+}
+
+.orderDetails {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.detailsGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detailLabel {
+  color: #666;
+  font-size: 14px;
+}
+
+.detailValue {
+  font-weight: 500;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+  color: #333;
+}
+
+.orderItems {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.itemsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.itemName {
+  flex: 2;
+  font-size: 14px;
+}
+
+.itemDetails {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 120px;
+}
+
+.itemQuantity {
+  color: #666;
+  font-size: 14px;
+}
+
+.itemPrice {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.totalItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 0;
+  margin-top: 16px;
+  border-top: 2px solid #333;
+  
+  .totalLabel {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .totalValue {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2e7d32;
+  }
+}
+
+.actions {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.refreshButton {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.linkButton {
+  background-color: $btn-primary-bg-color;
+  color: $btn-primary-text-color;
+  width: 100%;
+  border-radius: 28px;
+  padding: 16px 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  
+  &:hover, &:focus {
+    opacity: 0.8;
+  }
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 20px;
+  
+  p {
+    font-size: 18px;
+    color: #666;
+  }
+}
+
+.error {
+  padding: 40px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #d32f2f;
+  }
+}
+
+.mapLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+  font-size: 16px;
+}
+
+// Добавьте эти стили к существующим
+
+.mockIndicator {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  padding: 4px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.testControls {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  
+  h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+.testButtons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.testButton {
+  padding: 8px 12px;
+  font-size: 12px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+.toggleButton {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #6c757d;
+  color: white;
+  
+  &:hover {
+    background: #5a6268;
+  }
+}
+
+// Добавьте эти стили к существующим
+
+.timeInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+  
+  .timeLabel {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .timeValue {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2e7d32;
+  }
+  
+  .lastUpdated {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+  }
+}
+
+.statusInfo {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+}
+
+.statusMessage {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f8f9fa;
+}
+
+.statusIndicator {
+  background: white;
+  padding: 30px 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.statusTimeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 50px;
+    right: 50px;
+    height: 4px;
+    background: #e0e0e0;
+    z-index: 1;
+  }
+}
+
+.statusStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.statusCircle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  border: 4px solid white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+  &.active {
+    background: #0070f3;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.3);
+    
+    .statusIcon {
+      color: white;
+    }
+  }
+  
+  &.completed {
+    background: #2ecc71;
+    
+    .statusIcon {
+      color: white;
+    }
+  }
+}
+
+.statusIcon {
+  font-size: 24px;
+  transition: color 0.3s ease;
+}
+
+.statusLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: center;
+}
+
+.statusTime {
+  font-size: 12px;
+  color: #666;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #0070f3;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+// Для мобильных устройств
+@media (max-width: 768px) {
+  .statusTimeline {
+    flex-wrap: wrap;
+    
+    &::before {
+      display: none;
+    }
+  }
+  
+  .statusStep {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .timeInfo {
+    display: none; // Скрываем на мобильных чтобы не загромождать
+  }
+}

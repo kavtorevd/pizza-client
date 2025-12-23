@@ -90,3 +90,38 @@ export interface IOrder {
   branch_address?: string,
   driver_name?: string
 }
+
+export interface IOrderItem {
+  pizza: number,
+  pizza_name: string,
+  quantity: number,
+  price: string
+}
+
+export interface IOrder {
+  id?: number,
+  customer_phone: string,
+  delivery_address: string,
+  delivery_coordinates: string,
+  total_cost: string,  // Строка, так как с бэкенда приходит строка (DecimalField)
+  items: IOrderItem[],
+  status?: string,  // Изменил с "pending" на string для поддержки всех статусов
+  status_display?: string,
+  estimated_delivery_time?: number,
+  created_at?: string,
+  updated_at?: string,
+  driver?: number,
+  branch?: number,
+  user_name?: string,
+  branch_address?: string,
+  driver_name?: string
+}
+
+export interface IOrderRoute {
+  distance: number;
+  duration: number;
+  duration_minutes: number;
+  coordinates: [number, number][];
+  raw_coordinates: [number, number][];
+  error?: string;
+}
