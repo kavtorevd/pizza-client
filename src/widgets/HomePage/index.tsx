@@ -8,19 +8,21 @@ import Cart from '@@/icons/cart.svg';
 import Triangle from '@@/icons/Triangle.svg'
 import { ROUTING } from '@/shared/routing';
 import Menu from './Menu';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Button from '@/shared/Button';
+import GoTopButton from '@/shared/GoTopButton';
 
 export default function HomePage() {
  const pizzas_list:IPizza[] = pizzas;
  const [last_location, setLastLocation] = useState<string>('выбрать место');
- 
+ const [filter, setFilter] = useState('');
+ const inputRef = useRef<HTMLInputElement>(null);
  
  useEffect(() => {
    const item = localStorage.getItem('selectedLocation');
    const location = item? JSON.parse(item).address : 'выбрать место';
     setLastLocation(location)
   }, []);
-
 
 
   return (
@@ -37,7 +39,20 @@ export default function HomePage() {
           <Cart/>
         </Link>
       </div>
-      <Menu/>
+      <div className={styles.inputLine}>
+        {inputRef.current?.value&&<button
+          onClick={()=>{if (inputRef.current) {
+                            inputRef.current.value = '';
+                        };
+          setFilter('')}}
+          >x</button>}
+        <input ref ={inputRef}/>
+        <button
+        onClick={()=>setFilter(inputRef.current?.value||'')}
+        >🔍</button>
+      </div>
+      <Menu filter={filter}/>
+      <GoTopButton/>
     </div>
     
   )

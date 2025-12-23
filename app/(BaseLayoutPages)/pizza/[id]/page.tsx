@@ -10,12 +10,7 @@ interface PizzaPageProps {
 }
 
 export default function Page({ params }: PizzaPageProps) {
-  // Используем React.use() для распаковки Promise
   const { id } = use(params);
-  
-  console.log('ID:', id);
-  
   const numericId = parseInt(id, 10);
-  
   return <PizzaInfo id={numericId} />;
 }

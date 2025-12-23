@@ -19,13 +19,13 @@ const Button: React.FC<IButton> = ({
 }) => (
   <>
   {href ? (
-      <Link className={cn(styles.button_link,className)} href={href}>
+      <Link className={cn(styles.button_link, className)} href={href}>
         {children}
       </Link>
     ) : (
       <button
         type={type}
-        className={cn(className,styles.button)}
+        className={cn(styles.button, className)}
         onClick={onClick}
         disabled={disabled}
       >

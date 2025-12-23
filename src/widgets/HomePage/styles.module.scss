@@ -3,6 +3,8 @@
 .container{
   padding: $content-standart-padding;
   background-color:$bg-primary-color;
+  width: 100%;
+  max-width: 1800px;
 }
 
 .menu{
@@ -82,4 +84,23 @@
   height: 42px;
   border-radius: 50%;
   box-shadow: 0 4px 6px 0 $shadow-primary-color;
+}
+
+.inputLine{
+  display: flex;
+  flex-direction: row;
+  height: 55px;
+  padding: 10px 20px;
+  button, input{
+    border: 0;
+    background-color: transparent;
+  }
+  button{
+    filter: sepia(100%);
+    opacity: 0.5;
+  }
+  background-color: $bg-second-color;
+  margin-bottom: 15px;
+  border-radius: 25px;
+  color: $title-primary-color;
 }

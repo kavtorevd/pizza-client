@@ -16,22 +16,30 @@
 
 .menu {
   display: flex;
-  flex-direction: row;
-  gap:12px;
-  max-width: $content-max-width;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 50vh;
+  height: 100%;
+  gap: 5px;
   width: 100%;
   overflow-x: hidden;
-  margin: 0 auto;
-  margin-bottom:4px;
-    &:focus, &:hover{
-    overflow-x: scroll;
-    margin-bottom: 0px;
-  }
+  overflow-y: auto; // всегда показывать скролл, если нужно
+  margin-right: 4px;
+  max-width: min(90vw, $content-max-width);
+  padding: 20px;
   &::-webkit-scrollbar {
-     height: 4px; 
-   }
+    width: 4px;
+    background-color: #{$title-primary-color}50;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $title-primary-color;
+    border-radius: 2px;
+  }
+  @include media(2xs){
+    gap:20px;
+    max-height: 30vh;
+  }
 }
-
 .tittle {
   font-size: $title-secondary-size;
   text-align: center;
@@ -55,4 +63,93 @@
   display: flex;
   flex-direction: column;
   gap:5px;
+}
+
+.menuItem{
+  display:grid;
+  width: 100%;
+  grid-template-columns: auto 70px 100px;
+  grid-template-rows: auto;
+  position: relative;
+  &::before{
+    content: '•';
+    color: $title-primary-color;
+    position: absolute;
+    left: -15px;
+  }
+  *{
+    text-align: center;
+    height: auto;
+    max-height: unset;
+    opacity: 0.5;
+  }
+
+  @include media(2xs){
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(2,auto);
+    justify-content: center;
+    column-gap:1em;
+    border: 2px solid $title-primary-color;
+    border-radius: 20px;
+    padding: 5px;
+    width: 100%;
+    font-family: $font-Thin;
+    font-weight: 400;
+    &::before{display: none;}
+    *{
+      height: auto;
+      max-height: unset;
+      &:nth-child(2){
+        text-align: right;
+      }
+        &:nth-child(3){
+        text-align: left;
+      }
+    }
+  }
+}
+
+.nameLine{
+  text-align: left;
+  font-family: $font-Nunito;
+  color: $title-primary-color;
+  font-weight: 800;
+   opacity: 1;
+   @include media(2xs){
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+   }
+}
+
+.deactiveSubmite
+{
+  opacity: 0.5;
+}
+
+.location_tittle{
+  background-color: $bg-second-color;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: $text-primary-size;
+  color: $title-primary-color;
+  a{
+    color: red;
+    text-decoration:underline;
+  }
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-family: $font-Normal;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.locationAddress{
+  opacity: 0.6;
+  font-family: $font-Nunito;
+  font-weight: 400;
+  font-size: $text-primary-size;
 }

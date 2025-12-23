@@ -8,6 +8,7 @@ import Button from '@/shared/Button'
 import { ROUTING } from '@/shared/routing'
 import { useState, useEffect } from 'react'
 import Loading from '@/shared/Loading'
+import getPizzaInfo from '@/shared/api/getPizzaInfo'
 
 interface PizzaInfoProps {
   id: number;
@@ -16,59 +17,56 @@ interface PizzaInfoProps {
 export default function PizzaInfo({ id }: PizzaInfoProps) {
   const [pizza, setPizza] = useState<IPizza | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [quantity, setQuantity] = useState(1) // Добавляем состояние для количества в UI
+  const [amount, setAmount] = useState(0)
   
+  const fetchFunc = async ()=>{
+    const res: IPizza|string = await getPizzaInfo(id);
+    if (typeof res !== 'string') setPizza(res)
+  }
+
   useEffect(() => {
-    const foundPizza = pizzas.find(p => p.id === id)
-    console.log('Найдена пицца:', foundPizza)
-    setPizza(foundPizza || null)
+    fetchFunc()
     setIsLoading(false)
     
-    // Проверяем, есть ли уже эта пицца в корзине
     const savedBasket = localStorage.getItem('basket')
     if (savedBasket) {
       const currentBasket: IPizza[] = JSON.parse(savedBasket)
       const existingPizza = currentBasket.find(item => item.id === id)
       if (existingPizza && existingPizza.amount) {
-        setQuantity(existingPizza.amount)
+        setAmount(existingPizza.amount)
       }
     }
   }, [id])
 
   // Добавить в корзину
-  const handleAddToCart = () => {
+  const changeAmount = (newAmount: number) => {
     if (!pizza) return
-
     const savedBasket = localStorage.getItem('basket')
     const currentBasket: IPizza[] = savedBasket ? JSON.parse(savedBasket) : []
-    
     const existingIndex = currentBasket.findIndex(item => item.id === pizza.id)
     
     if (existingIndex !== -1) {
-      // Увеличиваем количество существующей пиццы
-      currentBasket[existingIndex].amount = (currentBasket[existingIndex].amount || 0) + quantity
+      if (newAmount == 0){
+          const updatedBasket = currentBasket.filter((p: IPizza) => p.id !== id);
+          localStorage.setItem('basket', JSON.stringify(updatedBasket));
+          setAmount(0);
+          return;
+      }
+      else{
+        currentBasket[existingIndex].amount = newAmount
+      }
     } else {
-      // Добавляем новую пиццу с указанным количеством
-      currentBasket.push({
-        ...pizza,
-        amount: quantity
-      })
+      if (newAmount>0)
+        currentBasket.push({
+          ...pizza,
+          amount: 1
+        })
     }
-    
-    localStorage.setItem('basket', JSON.stringify(currentBasket))
-    alert(`Добавлено в корзину: ${pizza.name} x${quantity}`)
-  }
-  
-  // Увеличить количество
-  const increaseQuantity = () => {
-    setQuantity(prev => prev + 1)
-  }
-  
-  // Уменьшить количество
-  const decreaseQuantity = () => {
-    setQuantity(prev => prev > 1 ? prev - 1 : 1)
-  }
 
+    localStorage.setItem('basket', JSON.stringify(currentBasket))
+    setAmount(newAmount);
+  }
+  
   if (isLoading) return <div className={styles.loading}><Loading/></div>
   
   if (!pizza) return (
@@ -120,31 +118,28 @@ export default function PizzaInfo({ id }: PizzaInfoProps) {
             <p>{pizza.description || `Вкусная пицца ${pizza.name} с сочной начинкой и ароматным тестом.`}</p>
           </div>
           
-          <div className={styles.ingredients}>
+          {pizza.ingredients&&<div className={styles.ingredients}>
             <h3>Состав</h3>
             <ul>
-              <li>Сыр моцарелла</li>
-              <li>Томатный соус</li>
-              <li>Специи</li>
               {pizza.ingredients?.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
+                <li key={index}>{ingredient.name} {ingredient.amount}</li>
               ))}
             </ul>
-          </div>
+          </div>}
           
           <div className={styles.quantityControl}>
             <div className={styles.quantityTitle}>Количество:</div>
             <div className={styles.quantityButtons}>
               <button 
-                onClick={decreaseQuantity}
+                onClick={()=>changeAmount(amount-1)}
                 className={styles.quantityButton}
-                disabled={quantity <= 1}
+                disabled={amount <= 0}
               >
                 −
               </button>
-              <span className={styles.quantity}>{quantity}</span>
+              <span className={styles.quantity}>{amount}</span>
               <button 
-                onClick={increaseQuantity}
+                onClick={()=>changeAmount(amount+1)}
                 className={styles.quantityButton}
               >
                 +
@@ -153,13 +148,6 @@ export default function PizzaInfo({ id }: PizzaInfoProps) {
           </div>
           
           <div className={styles.actions}>
-            <Button 
-              onClick={handleAddToCart}
-              className={styles.addButton}
-            >
-              {basketQuantity > 0 ? `Добавить еще (${quantity} шт.)` : `Добавить в корзину (${quantity} шт.)`}
-            </Button>
-            
             <Button 
               href={ROUTING.home.href}
               className={styles.continueButton}

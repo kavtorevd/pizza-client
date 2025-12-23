@@ -2,20 +2,43 @@
 .container{
   width: 100%;
   aspect-ratio: 1/1.16;
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  @include media(2xs){
+    margin-top: 10px;
+  }
+}
+
+.content{
+  width: 100%;
+  height: min-content;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   padding: 8px;
+  box-shadow:   1px 15px 14px 0 $shadow-primary-color,
+                inset -3px 20px 20px rgba($shadow-primary-color, 0.06);
+  outline: 3px solid $bg-primary-color;
   gap:8px;
-  max-width: 200px;
-  box-shadow: 0 4px 6px 0 $shadow-primary-color;
+  max-width: 250px;
+  @include media(2xs){
+      max-width: unset;
+  }
   justify-content: space-around;
   background-color: $bg-primary-color;
   position: relative;
   color: $text-primary-color;
 }
 
-.image_container{
+.content:hover{
+
+}
+
+.image_container__noImg{
   width: 100%;
   aspect-ratio: 1.45/1;
   overflow-y: hidden;
@@ -25,7 +48,20 @@
   align-items: center;
 }
 
-.image_container img {
+.image_container{
+  width: 100%;
+  min-height: 50px;
+  overflow-y: visible;
+  position: relative;
+  img {
+    position: absolute;
+    bottom: -30px;
+    z-index: 10;
+    filter: drop-shadow(0px 7px 10px $shadow-secndary-color);
+  }
+}
+
+.image_container__noImg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -33,13 +69,34 @@
 
 .sale{
   color: $attention-text-color;
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .cost_line{
   display: flex;
   flex-direction: row;
   gap:8px;
+  font-weight: 300;
+}
+
+.name_line{
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  *{
+    color: $title-primary-color;
+    font-family: $font-Nunito;
+    font-weight: 800;
+    font-size: $title-secondary-size;
+    line-height: calc( $title-secondary-size - 2px) ;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .def_price__saled{
@@ -50,10 +107,29 @@
   position: absolute;
   bottom: 2px;
   right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:5px;
   font-size: 30px;
   border: 0;
   opacity: 0.3;
   &:hover, &:focus{
-    opacity: 0.7;
+    opacity: 0.6;
+    span{
+      font-size: 20px;
+      opacity: 1;
+    }
+  }
+  span{
+    font-size: 22px;
+    opacity: 0;
+  }
+}
+.addButton__add{
+  color: $title-primary-color;
+  opacity: 1;
+  &:hover, &:focus{
+    opacity: 0.6;
   }
 }

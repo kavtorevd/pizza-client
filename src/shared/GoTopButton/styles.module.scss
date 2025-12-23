@@ -1,0 +1,78 @@
+@import '@/shared/styles/main';
+
+.goTopButton {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+  
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  
+  background: $orange-gradient;
+  color: $bg-primary-color;
+  border: none;
+  box-shadow: 0 4px 16px $shadow-primary-color;
+  
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Анимация появления
+  animation: fadeIn 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    opacity: 0.9;
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+  
+  &:focus {
+    outline: none;
+    opacity: 0.9;
+  }
+  
+  svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s;
+  }
+  
+  &:hover svg {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 0.5;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Адаптив для мобильных
+@include media(sm) {
+  .goTopButton {
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
