@@ -30,7 +30,7 @@ export interface IApiGetPizzas {
   count: number,
   next?:null,
   previous?:null,
-  results:IPizza_complete[],
+  results:IPizza[],
 }
 
 export interface ILocation {

@@ -79,7 +79,7 @@ const removeItem = (pizzaId: number) => {
           </button>
           <ul className={styles.menu}>
             {basketList.map((pizza: IPizza, i) => (
-              <li key={pizza.id} className={styles.locationItem} key={`bas-card${i}-${pizza.id}`}>
+              <li className={styles.locationItem} key={`bas-card${i}-${pizza.id}`}>
                 <BasketCard 
                   currency='р' 
                   data={pizza}

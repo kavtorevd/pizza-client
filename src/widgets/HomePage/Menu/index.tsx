@@ -1,12 +1,9 @@
 'use client'
-import {pizzas} from '@/tmp/some_tmp_pizza';
-import {IApiGetPizzas, IPizza} from '@/shared/interfaces';
+import {IPizza} from '@/shared/interfaces';
 import styles from './styles.module.scss';
 import Card from '@/shared/Card';
 import Loading from '@/shared/Loading';
 import { useEffect, useState } from 'react';
-import { ROUTING } from '@/shared/routing';
-import Link from 'next/link';
 import getPizzas from '@/shared/api/getPizzas';
 
 export default function Menu({filter}: {filter?:string}) {
@@ -25,7 +22,7 @@ export default function Menu({filter}: {filter?:string}) {
     const basketMap = new Map(savedBasket.map((item: IPizza) => [item.id, item.amount || 0]));
     const pizzasWithAmount = res.results.map(pizza => ({
       ...pizza,
-      amount: basketMap.get(pizza.id) || 0
+      amount: (basketMap.get(pizza.id) as number) ?? 0
     }));
 
     setPizzas_list(pizzasWithAmount);

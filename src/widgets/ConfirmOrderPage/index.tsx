@@ -1,11 +1,9 @@
 'use client'
-import {basket} from '@/tmp/some_tmp_pizza';
 import {IOrder, IPizza, IOrderItem} from '@/shared/interfaces';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Arrow from '@@/icons/Arrow.svg';
 import Button from '@/shared/Button';
-import Card from '@/shared/Card';
 import Loading from '@/shared/Loading';
 import { ROUTING } from '@/shared/routing';
 import { IMaskInput } from 'react-imask';
@@ -94,16 +92,6 @@ export default function ConfirmOrderPage() {
         console.error('Ошибка парсинга корзины:', error);
       }
     }
-    
-    const initialBasket = basket.map((item, i) => ({
-      ...item,
-      amount: item.amount || 1,
-      id: i, 
-    }));
-    
-    localStorage.setItem('basket', JSON.stringify(initialBasket));
-    setBasketList(initialBasket);
-    calculateTotalAmount(initialBasket);
   }, []);
 
   // Функция для расчета общей суммы

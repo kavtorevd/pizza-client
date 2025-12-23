@@ -114,7 +114,6 @@ export default function SelectLocationPage() {
       // Устанавливаем selected: true для выбранного
       if (locations[index]) {
         locations[index].selected = true;
-        // ⭐ СОХРАНЯЕМ ВЫБРАННЫЙ АДРЕС ОТДЕЛЬНО ⭐
         saveSelectedLocation(locations[index]);
       }
       
