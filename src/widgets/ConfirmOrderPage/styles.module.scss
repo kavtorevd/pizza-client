@@ -56,3 +56,187 @@
   flex-direction: column;
   gap:5px;
 }
+// Добавь эти стили в конец файла
+
+.errorContainer {
+  background-color: #ffeaea;
+  border: 1px solid #ff6b6b;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.errorIcon {
+  font-size: 20px;
+  color: #ff6b6b;
+}
+
+.errorMessage {
+  color: #d63031;
+  margin: 0;
+  font-size: 14px;
+}
+
+.successContainer {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.successIcon {
+  font-size: 48px;
+  color: #4CAF50;
+  margin-bottom: 20px;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.successTitle {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.successMessage {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 10px;
+  
+  strong {
+    color: #2196F3;
+    font-weight: 600;
+  }
+}
+
+.redirectMessage {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 30px;
+}
+
+.trackButton,
+.homeButton {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  margin: 5px;
+  transition: all 0.3s ease;
+}
+
+.trackButton {
+  background-color: #4CAF50;
+  color: white;
+  
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.homeButton {
+  background-color: #f5f5f5;
+  color: #333;
+  
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.locationContainer {
+  margin-bottom: 20px;
+}
+
+.changeAddress {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #2196F3;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.emptyBasket {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  
+  p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+}
+
+.shopButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2196F3;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  
+  &:hover {
+    background-color: #1976D2;
+  }
+}
+
+.orderItems {
+  margin-bottom: 20px;
+}
+
+.itemsTitle {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.itemQuantity {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.orderNote {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
+}
+
+.phoneInput {
+  background: transparent;
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  outline: none;
+  padding: 5px;
+  
+  &::placeholder {
+    color: #999;
+  }
+}
